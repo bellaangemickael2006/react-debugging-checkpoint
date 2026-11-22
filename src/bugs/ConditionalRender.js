@@ -76,9 +76,7 @@ function QuantityPicker({ initialQuantity = 1, price, onQuantityChange }) {
         />
       </Box>
 
-      {isVolumeDiscount(quantity) ? (
-        <VolumeDiscount price={price} quantity={quantity} />
-      ) : null}
+      <VolumeDiscount price={price} quantity={quantity} />
     </Box>
   );
 }
@@ -86,6 +84,10 @@ function QuantityPicker({ initialQuantity = 1, price, onQuantityChange }) {
 function VolumeDiscount({ price, quantity }) {
   const discount = calculateDiscount(quantity);
   const savings = formatAsCurrency(parseCurrencyAsAmount(price) * discount);
+
+  if (discount <= 0) {
+    return null;
+  }
 
   return (
     <Text data-test="discount" color="text-ok">
