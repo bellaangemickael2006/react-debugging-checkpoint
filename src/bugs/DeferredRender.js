@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo, Profiler } from "react";
+import { useCallback, useState, useMemo, useDeferredValue, Profiler } from "react";
 import { Box, Heading, Text, TextInput } from "grommet";
 import { FormSearch } from "grommet-icons";
 
@@ -19,15 +19,16 @@ const SEARCH_ICON = <FormSearch />;
 const DefiantDamselfly = () => {
   const [deliveryInput, setDeliveryInput] = useState("");
   const [deliveryUpdates, setDeliveryUpdates] = useState(EMPTY_UPDATES);
+  const deferredDeliveryInput = useDeferredValue(deliveryInput);
 
   const suggestions = useMemo(
     () =>
-      deliveryInput
+    deferredDeliveryInput
         ? SEARCH_SUGGESTIONS.filter((ss) =>
-            ss.value.toLowerCase().includes(deliveryInput.toLowerCase())
+            ss.value.toLowerCase().includes(deferredDeliveryInput.toLowerCase())
           )
         : SEARCH_SUGGESTIONS,
-    [deliveryInput]
+    [deferredDeliveryInput]
   );
 
   useBugTestOnce(
