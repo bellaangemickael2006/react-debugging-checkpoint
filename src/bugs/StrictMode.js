@@ -45,14 +45,17 @@ const SilentStagBeetle = () => {
 
 function MountCounter() {
   const mountCounter = useRef(0);
-  const [hasMounted, setHasMounted] = useState(false);
+  const [, setHasMounted] = useState(false);
 
   useEffect(() => {
-    if (hasMounted) return;
+    // Under StrictMode React runs effects twice on mount. A state flag read
+    // from the closure is still `false` on the second run, so use the ref
+    // (which persists across that simulated remount) as the guard.
+    if (mountCounter.current > 0) return;
     console.log(bug.name, "has mounted");
     mountCounter.current++;
     setHasMounted(true);
-  }, [hasMounted]);
+  }, []);
 
   useBugTest(
     "should not log to console twice when not under strict mode",
