@@ -91,9 +91,11 @@ function SaleTimer({ expiresInMs }) {
   const [saleCountdown, setSaleCountdown] = useState(expiresInMs);
 
   useEffect(() => {
-    setInterval(() => {
+    const timerId = setInterval(() => {
       setSaleCountdown((countdown) => countdown - 1000);
     }, 1000);
+
+    return () => clearInterval(timerId);
   }, []);
 
   useEffect(() => {
