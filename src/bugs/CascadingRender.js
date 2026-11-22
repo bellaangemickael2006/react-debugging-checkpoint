@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useState, useRef, memo } from "react";
 import { Button, Heading, Text, Box, ThumbsRating } from "grommet";
 import { AddCircle, SubtractCircle, Favorite } from "grommet-icons";
 
@@ -20,13 +20,13 @@ const CuriousCentipede = (props) => {
   const [likeStatus, setLikeStatus] = useState(
     props.liked === null ? null : props.liked ? "like" : "dislike"
   );
-  const handleOnLevelChange = (level) => {
+  const handleOnLevelChange = useCallback((level) => {
     setPurchaseLevel(level);
-  };
+  }, []);
 
-  const handleOnLikeChange = (likeState) => {
+  const handleOnLikeChange = useCallback((likeState) => {
     setLikeStatus(likeState);
-  };
+  }, []);
 
   useBugTest("only animates hearts once per like", ({ findByTestId }) => {
     expect(likeStatus).to.equal("like");
@@ -52,7 +52,7 @@ const CuriousCentipede = (props) => {
   );
 };
 
-const LikeButton = ({ liked, onLikeChange }) => {
+const LikeButton = memo(({ liked, onLikeChange }) => {
   const handleOnChange = (event) => {
     onLikeChange(event.target.value);
   };
@@ -70,7 +70,8 @@ const LikeButton = ({ liked, onLikeChange }) => {
       {liked === "like" ? <AffectionateBadge /> : null}
     </Box>
   );
-};
+});
+LikeButton.displayName = 'LikeButton';
 
 function BugAttributes({ initialLevel, onLevelChange }) {
   const [level, setLevel] = useState(initialLevel);
