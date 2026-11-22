@@ -184,7 +184,7 @@ function useTrackAnalytics() {
 
   const track = useCallback((analyticsEvent) => {
     setEventBatch((batch) => [...batch, analyticsEvent]);
-  });
+  }, []);
 
   useEffect(() => {
     if (eventBatch.length > 5) {
