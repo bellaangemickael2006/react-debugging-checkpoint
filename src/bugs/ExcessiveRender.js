@@ -26,15 +26,13 @@ const ExtravagantEmeraldAshBorer = () => {
     expect(findByTestId("quantity")).to.exist;
   });
 
-  const handleOnQuantityChange = () => refetch();
-
   return (
     <>
       <Heading level={3}>{bug.name}</Heading>
       <QuantityPicker
         show={!isFetching}
         initialQuantity={1}
-        onQuantityChange={handleOnQuantityChange}
+        onQuantityChange={refetch}
       />
     </>
   );
