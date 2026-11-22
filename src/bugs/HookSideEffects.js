@@ -19,7 +19,6 @@ const HuggableHoneybee = () => {
   const {
     data: promotion,
     isFetched,
-    isFetching,
     refetch,
   } = useQuery({
     queryKey: ["promotion", { name: bug.name }],
@@ -41,7 +40,7 @@ const HuggableHoneybee = () => {
     <>
       <Heading level={3}>{bug.name}</Heading>
       {isFetched && <Price price={bug.price} promotion={promotion} />}
-      {!isFetching && (
+      {isFetched && (
         <QuantityPicker initialQuantity={1} onQuantityChange={refetch} />
       )}
     </>
