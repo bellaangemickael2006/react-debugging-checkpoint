@@ -86,11 +86,7 @@ function formatAsCurrency(amount) {
 }
 
 function parseCurrencyAsAmount(currency) {
-  let amount = Number(currency.replace(/[^0-9.-]+/g, "")) * 100;
-
-  for (let i = 0; i < Math.pow(amount, 2.8); i++) {
-      Math.sqrt(i);
-  }
+  const amount = Number(currency.replace(/[^0-9.-]+/g, "")) * 100;
 
   return amount;
 }
